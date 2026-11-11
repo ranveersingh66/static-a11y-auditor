@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Static A11y Auditor — Web Accessibility Linter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ===== Header ===== -->
+    <header class="app-header" role="banner">
+      <div class="header-inner">
+        <div class="logo" aria-hidden="true">
+          <span class="logo-icon">♿</span>
+        </div>
+        <div class="header-text">
+          <h1 class="app-title">Static A11y Auditor</h1>
+          <p class="app-subtitle">Zero-dependency · Browser-based · WCAG Accessibility Linter</p>
+        </div>
+        <button
+          id="theme-toggle"
+          class="btn btn-icon"
+          aria-label="Toggle dark/light theme"
+          title="Toggle theme"
+        >
+          <span class="theme-icon" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== Main ===== -->
+    <main class="app-main" role="main">
+
+      <!-- ---- Input Panel ---- -->
+      <section class="panel input-panel" aria-labelledby="input-heading">
+        <div class="panel-header">
+          <h2 id="input-heading" class="panel-title">
+            <span aria-hidden="true">📄</span> HTML Input
+          </h2>
+          <div class="input-actions">
+            <label class="btn btn-secondary file-label" for="file-upload">
+              <span aria-hidden="true">📂</span> Open File
+              <input
+                type="file"
+                id="file-upload"
+                accept=".html,.htm"
+                class="visually-hidden"
+                aria-label="Upload an HTML file"
+              />
+            </label>
+            <button id="clear-btn" class="btn btn-secondary" aria-label="Clear the editor">
+              <span aria-hidden="true">✕</span> Clear
+            </button>
+            <button id="audit-btn" class="btn btn-primary" aria-label="Run accessibility audit">
+              <span aria-hidden="true">▶</span> Run Audit
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-wrapper">
+          <textarea
+            id="html-input"
+            class="code-editor"
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            placeholder="Paste your HTML here, or click &quot;Open File&quot; to load a file…"
+            aria-label="HTML code editor"
+            aria-describedby="editor-hint"
+          ></textarea>
+        </div>
+        <p id="editor-hint" class="hint-text">
+          Tip: Paste any snippet or full page. Scripts are <strong>never executed</strong> — parsing is sandboxed via <code>DOMParser</code>.
+        </p>
+      </section>
+
+      <!-- ---- Results Panel ---- -->
+      <section class="panel results-panel" aria-labelledby="results-heading" aria-live="polite">
+        <div class="panel-header">
+          <h2 id="results-heading" class="panel-title">
+            <span aria-hidden="true">🔍</span> Audit Results
+          </h2>
+          <div id="summary-badges" class="summary-badges" role="status" aria-label="Audit summary" hidden>
+            <span class="badge badge-error"   id="badge-error">0 Errors</span>
+            <span class="badge badge-warning" id="badge-warning">0 Warnings</span>
+            <span class="badge badge-pass"    id="badge-pass">0 Passes</span>
+          </div>
+        </div>
+
+        <!-- Empty / idle state -->
+        <div id="results-idle" class="results-idle" role="status">
+          <span class="idle-icon" aria-hidden="true">🧪</span>
+          <p>Paste your HTML and click <strong>Run Audit</strong> to see results here.</p>
+        </div>
+
+        <!-- Issue list -->
+        <ol id="results-list" class="results-list" hidden aria-label="List of accessibility issues"></ol>
+
+        <!-- All-pass celebration -->
+        <div id="results-pass" class="results-pass" hidden role="status">
+          <span class="pass-icon" aria-hidden="true">✅</span>
+          <p>All checks passed — no issues found!</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="app-footer" role="contentinfo">
+      <p>
+        Checks based on
+        <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">
+          WCAG 2.1
+        </a>
+        guidelines. No data ever leaves your browser.
+      </p>
+    </footer>
+
+    <script src="auditor.js"></script>
+  </body>
+</html>
+
